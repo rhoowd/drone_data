@@ -4,7 +4,7 @@
 import datetime
 import logging
 
-logger = logging.getLogger('Energy.logging')
+logger = logging.getLogger('1Energy.logging')
 
 
 class Energy(object):
@@ -27,8 +27,8 @@ class Energy(object):
         # print self.drone.attitude
         # print self.drone.battery_state
         # print self.drone.gps_position.latitude
-        data = "%d\t%s\t%f\t%f\t%f\t%f\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" \
-               % (sequence_num, activate, fb, lr, ud, a, q.x, q.y, q.z, q.w,
+        data = "%s\t%d\t%s\t%f\t%f\t%f\t%f\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" \
+               % (datetime.datetime.now(), sequence_num, activate, fb, lr, ud, a, q.x, q.y, q.z, q.w,
                   battery.voltage, battery.current, battery.percentage,
                   vel.x, vel.y, vel.z,
                   self.drone.gps_position.latitude, self.drone.gps_position.longitude, self.drone.gps_position.altitude)

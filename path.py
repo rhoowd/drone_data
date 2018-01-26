@@ -60,8 +60,6 @@ class Path(object):
             elif dir == 'lr':
                 self.local_vel['lr'] = vel * direction
 
-        print self.cnt, self.local_vel
-
     def act_circle(self, vel, dir):
 
         self.cnt += 1

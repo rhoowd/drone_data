@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # coding=utf8
-from drone.drone_test import Drone
-# from drone.dji_drone import Drone
+
+
 from energy_logging import Energy
+from drone.dji_drone import Drone
+# from drone.drone_test import Drone
+
 from control import Control
 import config
 import logging

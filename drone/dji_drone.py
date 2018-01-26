@@ -107,13 +107,13 @@ class Drone(object):
     def flight_control_generic(self):
         pass
 
-    def flight_control_velocity(self, x_vel, y_vel, z_vel, yaw_rate):
+    def flight_control_velocity(self, x_vel, y_vel, z_vel, yaw_rate=0):
         msg = Joy()
         #print len(msg.axes)
         msg.axes.append(x_vel)
         msg.axes.append(y_vel)
         msg.axes.append(z_vel)
-        msg.axes.append(yaw_rate)
+        # msg.axes.append(yaw_rate)
 
         self.flightCtrlVelPublisher.publish(msg)
 
@@ -166,8 +166,39 @@ if __name__ == "__main__":
     print drone.velocity
     print drone.gps_position
 
+    # drone.flight_control_velocity(3,0,0)
+    # time.sleep(5)
+    # drone.flight_control_velocity(0,0,0)
+    # time.sleep(1)
+    # drone.flight_control_velocity(-3,0,0)
+    # time.sleep(5)
+    
+    for i in range(70):
+        drone.flight_control_velocity(3,0,0)
+        time.sleep(0.1)
+    for i in range(20):
+        drone.flight_control_velocity(1.5,0,0)
+        time.sleep(0.1)
 
-    drone.flight_control_velocity(30,30,30)
-    drone.flight_control_velocity(30,30,30)
+    for i in range(10):
+        drone.flight_control_velocity(0,0,0)
+        time.sleep(0.1)
+    for i in range(70):
+        drone.flight_control_velocity(-3,0,0)
+        time.sleep(0.1)
+
+    # for i in range(10):
+    #     drone.flight_control_velocity(3,0,0)
+    #     time.sleep(0.5)
+    # for i in range(1):
+    #     drone.flight_control_velocity(0,0,0)
+    #     time.sleep(1)
+    # for i in range(10):
+    #     drone.flight_control_velocity(-3,0,0)
+    #     time.sleep(0.5)
+
+    print "land"
+    drone.land()
     end_result = drone.release_sdk_control()
     print end_result
+

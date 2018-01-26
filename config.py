@@ -1,7 +1,7 @@
 import logging
 
 logger_env = logging.getLogger('Energy')
-logger_env.setLevel(logging.INFO)
+logger_env.setLevel(logging.DEBUG)
 sh = logging.StreamHandler()
 # fm = logging.Formatter('[%(levelname)s|%(filename)s:%(lineno)s] %(asctime)s > [%(name)s] %(message)s')
 fm = logging.Formatter('[%(levelname)s|%(filename)s:%(lineno)s] %(message)s')
