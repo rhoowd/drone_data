@@ -5,6 +5,7 @@ from Queue import Queue
 import threading
 import sys
 from path import Path
+import math
 import logging
 
 logger = logging.getLogger('Energy.control')
@@ -61,13 +62,20 @@ class Control(object):
 
     def convert_local_to_global(self, l_vel):
         # TODO: Implement this function
+        yaw = self.get_yaw()
+
         g_vel = dict()
-        g_vel['x'] = l_vel['fb']
-        g_vel['y'] = l_vel['lr']
+        g_vel['x'] = l_vel['fb']*math.cos(math.radians(yaw)) - l_vel['lr']*math.sin(math.radians(yaw))
+        g_vel['y'] = l_vel['fb']*math.sin(math.radians(yaw)) + l_vel['lr']*math.cos(math.radians(yaw))
         g_vel['z'] = l_vel['ud']
         g_vel['yaw'] = l_vel['a']
 
         return g_vel
+
+    def get_yaw(self, q):
+        ret = math.degrees(math.atan2(2.0 * (q.w * q.x + q.y * q.z),
+                                      -1.0 + 2.0 * (q.x * q.x + q.y * q.y)))
+        return ret
 
     def print_progress(self):
         if self.seq_num % 10 == 0:
