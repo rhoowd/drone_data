@@ -4,7 +4,7 @@
 import datetime
 import logging
 
-logger = logging.getLogger('1Energy.logging')
+logger = logging.getLogger('Energy.logging')
 
 
 class Energy(object):

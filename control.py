@@ -37,7 +37,7 @@ class Control(object):
         print "start"
         while True:
             self.seq_num += 1
-            time.sleep(0.2)
+            time.sleep(0.1)
             if not self.command_queue.empty():
                 command = self.command_queue.get()
                 if command is 'q':
@@ -48,10 +48,10 @@ class Control(object):
                 elif command is 'h':
                     print "Help:"
                     print "\t  0: stop"
-                    print "\t  1: rotate at the fixed point clockwise"
-                    print "\t  2: rotate at the fixed point counter-clockwise"
                     print "\t 1x: move forward and backward with vel x"
                     print "\t 2x: move left and right with vel x"
+                    print "\t 3x: rotate at the fixed point clockwise"
+                    print "\t 4x: rotate at the fixed point counter-clockwise"
                 else:
                     self.path.set_path_mode(command)
 
@@ -78,10 +78,10 @@ class Control(object):
 
         g_vel = dict()
 
-        g_vel['x'] = l_vel['fb']
-        g_vel['y'] = l_vel['lr']
-        # g_vel['x'] = l_vel['fb']*math.cos(math.radians(yaw)) - l_vel['lr']*math.sin(math.radians(yaw))
-        # g_vel['y'] = l_vel['fb']*math.sin(math.radians(yaw)) + l_vel['lr']*math.cos(math.radians(yaw))
+        # g_vel['x'] = l_vel['fb']
+        # g_vel['y'] = l_vel['lr']
+        g_vel['x'] = l_vel['fb']*math.cos(math.radians(yaw)) - l_vel['lr']*math.sin(math.radians(yaw))
+        g_vel['y'] = l_vel['fb']*math.sin(math.radians(yaw)) + l_vel['lr']*math.cos(math.radians(yaw))
         g_vel['z'] = l_vel['ud']
         g_vel['yaw'] = l_vel['a']
 

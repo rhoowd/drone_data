@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # encoding = utf-8
 import logging
+import math
 
 logger = logging.getLogger('Energy.path')
 
@@ -34,9 +35,15 @@ class Path(object):
         return self.local_vel
 
     def update_action(self):
+
         if 10 < self.path_mode <= 20:
             self.act_line(float(self.path_mode % 10), 'fb')
-
+        elif 20 < self.path_mode <= 30:
+            self.act_line(float(self.path_mode % 10), 'lr')
+        elif 30 < self.path_mode <= 40:
+            self.act_rotation(float(self.path_mode % 10, True))
+        elif 40 < self.path_mode <= 50:
+            self.act_rotation(float(self.path_mode % 10, False))
         else:
             self.local_vel['fb'] = 0.0
             self.local_vel['lr'] = 0.0
@@ -77,4 +84,24 @@ class Path(object):
             elif dir == 'lr':
                 self.local_vel['lr'] = vel * direction
 
-        print self.cnt, self.local_vel
+        R = 4
+        V = vel
+        # start to draw circle
+
+
+        vx = V * math.sin((V / R) * self.cnt)
+        vy = V * math.cos((V / R) * self.cnt)
+        v = (vx, vy, 0, 0)
+
+
+    def act_rotation(self, vel, clockwise=True):
+        self.local_vel['fb'] = 0.0
+        self.local_vel['lr'] = 0.0
+        self.local_vel['ud'] = 0.0
+
+        if clockwise:
+            self.local_vel['a'] = vel
+        else:
+            self.local_vel['a'] = -vel
+
+

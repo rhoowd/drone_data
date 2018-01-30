@@ -113,7 +113,7 @@ class Drone(object):
         msg.axes.append(x_vel)
         msg.axes.append(y_vel)
         msg.axes.append(z_vel)
-        # msg.axes.append(yaw_rate)
+        msg.axes.append(yaw_rate)
 
         self.flightCtrlVelPublisher.publish(msg)
 
