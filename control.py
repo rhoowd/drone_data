@@ -32,9 +32,10 @@ class Control(object):
     def run(self):
         result = self.drone.activate()
         logger.debug("Activate: " + str(result))
-        print "Press any key to start"
+        print "Press any key and enter to start"
         self.command_queue.get()
         print "start"
+        result = self.drone.request_sdk_control()
         while True:
             self.seq_num += 1
             time.sleep(0.1)
@@ -59,7 +60,7 @@ class Control(object):
                     self.path.set_path_mode(command)
 
             # TODO: Something related to activation
-            result = self.drone.request_sdk_control()
+            # result = self.drone.request_sdk_control()
             logger.debug("Request sdk control: " + str(result) + " yaw: "+ str(self.get_yaw()))
             local_vel = self.path.get_action()
             global_vel = self.convert_local_to_global(local_vel)

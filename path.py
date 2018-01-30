@@ -41,9 +41,9 @@ class Path(object):
         elif 20 < self.path_mode <= 30:
             self.act_line(float(self.path_mode % 10), 'lr')
         elif 30 < self.path_mode <= 40:
-            self.act_rotation(float(self.path_mode % 10, True))
+            self.act_rotation(float(self.path_mode % 10), True)
         elif 40 < self.path_mode <= 50:
-            self.act_rotation(float(self.path_mode % 10, False))
+            self.act_rotation(float(self.path_mode % 10), False)
         else:
             self.local_vel['fb'] = 0.0
             self.local_vel['lr'] = 0.0
