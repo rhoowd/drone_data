@@ -45,6 +45,9 @@ class Control(object):
                 elif command is 's':
                     self.drone.takeoff()
                     time.sleep(10)
+                elif command is 'l':
+                    self.drone.land()
+                    time.sleep(10)
                 elif command is 'h':
                     print "Help:"
                     print "\t  0: stop"
