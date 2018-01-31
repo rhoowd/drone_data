@@ -12,7 +12,7 @@ class Path(object):
         self.path_mode = 0
         self.cnt = 0
 
-        self.period_line = 100  # unit: 0.1 sec
+        self.period_line = 60  # unit: 0.1 sec
 
         self.local_vel = dict()
         self.local_vel['fb'] = 0.0
@@ -44,6 +44,8 @@ class Path(object):
             self.act_rotation(float(self.path_mode % 10), True)
         elif 40 < self.path_mode <= 50:
             self.act_rotation(float(self.path_mode % 10), False)
+        elif 50 < self.path_mode <= 60:
+            self.act_circle()
         else:
             self.local_vel['fb'] = 0.0
             self.local_vel['lr'] = 0.0
@@ -68,31 +70,14 @@ class Path(object):
                 self.local_vel['lr'] = vel * direction
 
     def act_circle(self, vel, dir):
-
-        self.cnt += 1
-        direction = ((self.cnt / self.period_line % 2)-0.5) *2
-        pause_flag = self.cnt % self.period_line < 10
-
-        self.local_vel['fb'] = 0.0
+        self.local_vel['fb'] = 1.0
         self.local_vel['lr'] = 0.0
         self.local_vel['ud'] = 0.0
-        self.local_vel['a'] = 0.0
 
-        if not pause_flag:
-            if dir == 'fb':
-                self.local_vel['fb'] = vel * direction
-            elif dir == 'lr':
-                self.local_vel['lr'] = vel * direction
-
-        R = 4
-        V = vel
-        # start to draw circle
-
-
-        vx = V * math.sin((V / R) * self.cnt)
-        vy = V * math.cos((V / R) * self.cnt)
-        v = (vx, vy, 0, 0)
-
+        if clockwise:
+            self.local_vel['a'] = 0.2
+        else:
+            self.local_vel['a'] = 0.2
 
     def act_rotation(self, vel, clockwise=True):
         self.local_vel['fb'] = 0.0
@@ -100,8 +85,8 @@ class Path(object):
         self.local_vel['ud'] = 0.0
 
         if clockwise:
-            self.local_vel['a'] = vel
+            self.local_vel['a'] = vel/5.0
         else:
-            self.local_vel['a'] = -vel
+            self.local_vel['a'] = -vel/5.0
 
 
